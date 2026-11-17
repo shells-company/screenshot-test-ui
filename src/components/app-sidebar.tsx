@@ -52,30 +52,30 @@ import { initials } from "@/lib/format";
 
 const nav = [
   {
-    label: "Platform",
+    label: "Build",
     items: [
-      { title: "Overview", href: "/", icon: LayoutDashboard },
-      { title: "Projects", href: "/projects", icon: FolderKanban },
-      { title: "Deployments", href: "/deployments", icon: Rocket },
-      { title: "Logs", href: "/logs", icon: ScrollText },
-      { title: "Feature flags", href: "/flags", icon: Flag },
+      { title: "Home", href: "/", icon: LayoutDashboard },
+      { title: "Apps", href: "/projects", icon: FolderKanban },
+      { title: "Releases", href: "/deployments", icon: Rocket },
+      { title: "Flags", href: "/flags", icon: Flag },
     ],
   },
   {
-    label: "Observability",
+    label: "Run",
     items: [
-      { title: "Monitors", href: "/monitors", icon: Activity },
+      { title: "Uptime checks", href: "/monitors", icon: Activity },
       { title: "Incidents", href: "/incidents", icon: ShieldAlert, badgeKey: "incidents" as const },
-      { title: "Usage", href: "/usage", icon: BarChart3 },
+      { title: "Log explorer", href: "/logs", icon: ScrollText },
+      { title: "Billing usage", href: "/usage", icon: BarChart3 },
     ],
   },
   {
-    label: "Organization",
+    label: "Manage",
     items: [
-      { title: "Team", href: "/team", icon: Users },
-      { title: "API keys", href: "/api-keys", icon: KeyRound },
+      { title: "People", href: "/team", icon: Users },
+      { title: "Tokens", href: "/api-keys", icon: KeyRound },
       { title: "Webhooks", href: "/webhooks", icon: Webhook },
-      { title: "Audit log", href: "/audit-log", icon: Radio },
+      { title: "Activity", href: "/audit-log", icon: Radio },
       { title: "Settings", href: "/settings", icon: Settings },
     ],
   },
@@ -87,7 +87,10 @@ export function AppSidebar() {
   const openIncidents = state.incidents.filter((i) => i.status !== "resolved").length;
 
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar
+      collapsible="icon"
+      className="[--sidebar:#0b1220] [--sidebar-foreground:#cbd5e1] [--sidebar-accent:#1d2a44] [--sidebar-accent-foreground:#ffffff] [--sidebar-border:#1d2a44] [--sidebar-primary:#38bdf8]"
+    >
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
