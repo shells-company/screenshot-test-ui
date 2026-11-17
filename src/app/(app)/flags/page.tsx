@@ -40,11 +40,11 @@ function FlagsInner() {
   return (
     <>
       <PageHeader
-        title="Feature flags"
-        description="Toggle features per environment and target specific users with rules."
+        title="Release switches"
+        description="Ship dark, then flip a switch per environment. Click an environment pill to turn it on or off."
         actions={
           <Button onClick={() => setCreateOpen(true)} data-testid="create-flag">
-            <Plus data-icon="inline-start" /> Create flag
+            <Plus data-icon="inline-start" /> Add switch
           </Button>
         }
       />
@@ -60,12 +60,10 @@ function FlagsInner() {
           <Table data-testid="flags-table">
             <TableHeader>
               <TableRow>
-                <TableHead className="pl-4">Flag</TableHead>
-                <TableHead>Enabled</TableHead>
-                <TableHead>Production</TableHead>
-                <TableHead>Staging</TableHead>
-                <TableHead>Development</TableHead>
-                <TableHead>Rollout</TableHead>
+                <TableHead className="pl-4">Switch</TableHead>
+                <TableHead>Live</TableHead>
+                <TableHead>Environments</TableHead>
+                <TableHead>Audience</TableHead>
                 <TableHead>Owner</TableHead>
                 <TableHead className="text-right">Updated</TableHead>
                 <TableHead className="w-10" />
@@ -97,24 +95,28 @@ function FlagsInner() {
                       aria-label={`Toggle ${f.name}`}
                     />
                   </TableCell>
-                  {envs.map((e) => (
-                    <TableCell key={e}>
-                      <Switch
-                        size="sm"
-                        checked={f.environments[e]}
-                        disabled={!f.enabled}
-                        onCheckedChange={(v) => dispatch({ type: "flag.env", id: f.id, env: e, value: v })}
-                        aria-label={`${f.name} in ${e}`}
-                      />
-                    </TableCell>
-                  ))}
                   <TableCell>
-                    <div className="flex items-center gap-2">
-                      <div className="h-1.5 w-16 overflow-hidden rounded-full bg-muted">
-                        <div className="h-full bg-primary" style={{ width: `${f.rollout}%` }} />
-                      </div>
-                      <span className="text-xs tabular-nums text-muted-foreground">{f.rollout}%</span>
+                    <div className="flex gap-1">
+                      {envs.map((e) => (
+                        <button
+                          key={e}
+                          type="button"
+                          disabled={!f.enabled}
+                          onClick={() => dispatch({ type: "flag.env", id: f.id, env: e, value: !f.environments[e] })}
+                          aria-label={`${f.name} in ${e}`}
+                          className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide disabled:opacity-40 ${
+                            f.environments[e] ? "bg-emerald-500 text-white" : "bg-muted text-muted-foreground line-through"
+                          }`}
+                        >
+                          {e.slice(0, 4)}
+                        </button>
+                      ))}
                     </div>
+                  </TableCell>
+                  <TableCell>
+                    <span className="rounded-md bg-violet-100 px-2 py-1 text-sm font-semibold tabular-nums text-violet-800">
+                      {f.rollout}% of users
+                    </span>
                   </TableCell>
                   <TableCell className="text-muted-foreground">{f.owner}</TableCell>
                   <TableCell className="text-right text-muted-foreground">{relativeTime(f.updatedAt)}</TableCell>
