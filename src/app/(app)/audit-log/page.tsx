@@ -31,8 +31,8 @@ export default function AuditLogPage() {
   return (
     <>
       <PageHeader
-        title="Audit log"
-        description="Every change made by members and API keys, retained for 365 days."
+        title="Activity history"
+        description="Who changed what, kept for a year."
         actions={
           <Button variant="outline" onClick={() => toast("Export started", { description: "You'll receive an email when the CSV is ready." })}>
             <Download data-icon="inline-start" /> Export CSV
