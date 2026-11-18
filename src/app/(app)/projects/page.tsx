@@ -41,7 +41,7 @@ function ProjectsInner() {
   const params = useSearchParams();
   const [query, setQuery] = React.useState("");
   const [status, setStatus] = React.useState<(typeof statusFilters)[number]>("all");
-  const [view, setView] = React.useState<"table" | "grid">("table");
+  const [view, setView] = React.useState<"table" | "grid">("grid");
   const [newOpen, setNewOpen] = React.useState(params.get("new") === "1");
 
   const filtered = state.projects.filter(
@@ -53,11 +53,11 @@ function ProjectsInner() {
   return (
     <>
       <PageHeader
-        title="Projects"
-        description={`${state.projects.length} projects across 4 regions`}
+        title="Apps"
+        description={`${state.projects.length} apps deployed to 4 regions. Switch to List for the full table.`}
         actions={
           <Button onClick={() => setNewOpen(true)}>
-            <Plus data-icon="inline-start" /> New project
+            <Plus data-icon="inline-start" /> Create app
           </Button>
         }
       />
@@ -87,8 +87,8 @@ function ProjectsInner() {
         </Select>
         <Tabs value={view} onValueChange={(v) => setView(v as typeof view)} className="sm:ml-auto">
           <TabsList>
-            <TabsTrigger value="table">Table</TabsTrigger>
-            <TabsTrigger value="grid">Grid</TabsTrigger>
+            <TabsTrigger value="table">List</TabsTrigger>
+            <TabsTrigger value="grid">Cards</TabsTrigger>
           </TabsList>
         </Tabs>
       </div>
